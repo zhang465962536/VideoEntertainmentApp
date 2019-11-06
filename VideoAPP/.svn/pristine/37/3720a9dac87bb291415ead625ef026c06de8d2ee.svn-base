@@ -1,0 +1,741 @@
+package com.example.videoapp.activity;
+
+import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.DisplayMetrics;
+import android.view.GestureDetector;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.MediaController;
+import android.widget.SeekBar;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.VideoView;
+
+import com.example.videoapp.R;
+import com.example.videoapp.Utils.LogUtil;
+import com.example.videoapp.Utils.Utils;
+import com.example.videoapp.domain.MediaItem;
+
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+public class SystemVideoPlayer extends Activity implements View.OnClickListener {
+
+
+    private VideoView mVideoView;
+    private Uri mUri;
+    private LinearLayout llTop;
+    private ImageView ivBattery;
+    private TextView tvBatteryNumber;
+    private TextView tvTime;
+    private ImageButton btnVideoExit;
+    private TextView tvName;
+    private LinearLayout llBottom;
+    private ImageView btnStop;
+    private TextView tvCurrentTime;
+    private SeekBar seekbarVideo;
+    private TextView tvDuration;
+    private ImageButton btnVideoNext;
+    private LinearLayout llSpeaker;
+    private SeekBar seekbarVoice;
+    private ImageView ivSpeak;
+    private TextView tvVoiceNumber;
+
+
+    private Utils mUtils;
+    private BatteryReceiver mBatteryReceiver;
+    private int electricQuantity;
+    private ArrayList<MediaItem> mediaItems;
+    private int position;
+    //[1]定义一个手势识别器
+    private GestureDetector mGestureDetector;
+    //隐藏控制面板的时间
+    private static final int HINDE_TIME = 3000;
+    //获取声音管理者
+    private AudioManager am;
+    //当前音量 系统分为 0 - 15
+    private int currentVolume;
+    //最大音量
+    private int maxVolume;
+    //是否是静音
+    private boolean isMute = false;
+    //屏幕的宽
+    private int screenWidth;
+    //屏幕的高
+    private int screenHeight;
+    //上一次声音的位置
+    private int lastVolume;
+
+    //进度更新
+    private static final int PROGRESS = 0;
+    //音量面板
+    private static final int HIDE_VolumeModule = 1;
+    //隐藏控制面板
+    private static final int HIDE_MEIDACONTROLLER = 2;
+    //改变音量
+    private static final int UPDATE_VOLUME = 3;
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case PROGRESS:
+                    //不断得到当前播放进度
+                    int currentPosition = mVideoView.getCurrentPosition();
+                    seekbarVideo.setProgress(currentPosition);
+                    tvCurrentTime.setText(mUtils.stringForTime(currentPosition));
+
+                    //实时更新系统时间
+                    tvTime.setText(getSystemTime());
+
+                    //更新电池电量
+                    tvBatteryNumber.setText(electricQuantity + "");
+
+                    //每一秒 更新进度条一次
+                    mHandler.removeMessages(PROGRESS);
+                    mHandler.sendEmptyMessageDelayed(PROGRESS, 1000);
+                    break;
+
+                case HIDE_MEIDACONTROLLER:
+                    hideMediaController();
+                    break;
+
+                case HIDE_VolumeModule:
+
+                    hideVolumeModule();
+
+                    break;
+
+                case UPDATE_VOLUME:
+                    int updateVolume = (int) (currentVolume*(100.0/60.0));
+                    if(updateVolume < 0){
+                        updateVolume = 0;
+                    }else if(updateVolume > 100){
+                        updateVolume = 100;
+                    }
+                    tvVoiceNumber.setText( updateVolume + "%");
+                    break;
+            }
+        }
+    };
+
+
+    /**
+     * 获取系统时间
+     *
+     * @return
+     */
+    private String getSystemTime() {
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        return format.format(new Date());
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        LogUtil.e("onCreate------");
+
+        initData();
+
+
+        findViews();
+
+        getData();
+        setData();
+        setListenr();
+
+
+        //视频控制面板
+        // mVideoView.setMediaController(new MediaController(this));
+    }
+
+    private void setData() {
+        if (mediaItems != null && mediaItems.size() > 0) {
+            MediaItem mediaItem = mediaItems.get(position);
+            mVideoView.setVideoPath(mediaItem.getData());
+            tvName.setText(mediaItem.getName());
+        } else if (mUri != null) {
+            mVideoView.setVideoURI(mUri);
+            tvName.setText(mUri.toString());
+        }
+
+        setButtonState();
+
+        //在看视频的时候 不会锁屏
+        mVideoView.setKeepScreenOn(true);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+
+    }
+
+    private void getData() {
+        //得到一个地址 来自于文件夹浏览器  浏览器 相册
+        mUri = getIntent().getData();
+        mediaItems = (ArrayList<MediaItem>) getIntent().getSerializableExtra("videolist");
+        //列表中的位置
+        position = getIntent().getIntExtra("position", 0);
+    }
+
+    private void setListenr() {
+        //当底层解码器准备好的时候 回调这个方法
+        mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+
+                //【1】得到视频的总时长 并且和 seekBar.setMax关联
+                int duration = mp.getDuration();
+                seekbarVideo.setMax(duration);
+                //设置总时长
+                tvDuration.setText(mUtils.stringForTime(duration));
+
+                //【2】发送给handler 在主线程更新UI
+                mHandler.sendEmptyMessage(PROGRESS);
+
+                //开始播放
+                mVideoView.start();
+
+                //刚开始进入 默认隐藏控制面板
+                hideMediaController();
+            }
+        });
+
+        //当播放出错的时候 回调这个方法
+        mVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(MediaPlayer mp, int what, int extra) {
+
+                Toast.makeText(getApplicationContext(), "视频播放失败", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+        //当播放完视频 之后 回调这个方法
+        mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                //Toast.makeText(getApplicationContext(), "播放完成", Toast.LENGTH_SHORT).show();
+                //finish();
+                setButtonState();
+            }
+        });
+
+        //给seekBar 设置拖动监听
+        seekbarVideo.setOnSeekBarChangeListener(new VideoOnSeekBarChanageListener());
+        seekbarVoice.setOnSeekBarChangeListener(new VoiceOnSeekBarChanageListener());
+    }
+
+    class VoiceOnSeekBarChanageListener implements SeekBar.OnSeekBarChangeListener {
+        /**
+         * 当进度更新的时候 回调这个方法
+         *
+         * @param seekBar
+         * @param progress 当前的进度
+         * @param fromUser 是否是由用户引起的
+         */
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            if (fromUser) {
+                //
+                updateVolumeProgress(progress);
+            }
+        }
+
+        //当手触摸seekbar 的时候 回调这个方法
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+            mHandler.removeMessages(HIDE_VolumeModule);
+        }
+
+        //当手指离开seekbar 的时候 回调这个方法
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            mHandler.sendEmptyMessageDelayed(HIDE_VolumeModule, HINDE_TIME);
+        }
+    }
+
+    //根据音量传入的值 修改音量  主要是设置静音
+    private void updateVolume(int volume) {
+        if (isMute) {
+            //setStreamVolume 第二个参数 可以使系统的音量界面是否显示  0 就是不显示  1 就是显示
+            am.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
+            seekbarVoice.setProgress(0);
+           // currentVolume = 0;
+            ivSpeak.setBackgroundResource(R.drawable.iv_video_speaker_null);
+        } else {
+            am.setStreamVolume(AudioManager.STREAM_MUSIC, volume, 0);
+            seekbarVoice.setProgress(volume);
+            currentVolume = volume;
+            ivSpeak.setBackgroundResource(R.drawable.iv_video_speaker);
+        }
+        mHandler.sendEmptyMessage(UPDATE_VOLUME);
+
+    }
+
+    //可以滑动
+    private void updateVolumeProgress(int volume) {
+        am.setStreamVolume(AudioManager.STREAM_MUSIC, volume, 0);
+        seekbarVoice.setProgress(volume);
+
+        currentVolume = volume;
+
+        if (volume <= 0) {
+            isMute = true;
+            ivSpeak.setBackgroundResource(R.drawable.iv_video_speaker_null);
+        } else {
+            isMute = false;
+            ivSpeak.setBackgroundResource(R.drawable.iv_video_speaker);
+        }
+        mHandler.sendEmptyMessage(UPDATE_VOLUME);
+
+    }
+
+
+    class VideoOnSeekBarChanageListener implements SeekBar.OnSeekBarChangeListener {
+
+        /**
+         * 当进度更新的时候 回调这个方法
+         *
+         * @param seekBar
+         * @param progress 当前的进度
+         * @param fromUser 是否是由用户引起的
+         */
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            if (fromUser) {
+                //如果是由用户拖动
+                mVideoView.seekTo(progress);
+            }
+        }
+
+        /**
+         * 当手触摸seekbar 的时候 回调这个方法
+         *
+         * @param seekBar
+         */
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+            mHandler.removeMessages(HIDE_VolumeModule);
+        }
+
+        /**
+         * 当手指离开seekbar 的时候 回调这个方法
+         *
+         * @param seekBar
+         */
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            mHandler.sendEmptyMessageDelayed(HIDE_VolumeModule, HINDE_TIME);
+        }
+    }
+
+    private void initData() {
+
+        //实例化AudioManager
+        am = (AudioManager) getSystemService(AUDIO_SERVICE);
+        currentVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC);
+        //获取最大音量
+        maxVolume = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+
+        //获取屏幕的宽高
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        screenWidth = displayMetrics.widthPixels;
+        screenHeight = displayMetrics.heightPixels;
+
+        mUtils = new Utils();
+        //注册电量监听广播
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
+        mBatteryReceiver = new BatteryReceiver();
+        registerReceiver(mBatteryReceiver, intentFilter);
+
+        //[2]实例化手势识别器
+        mGestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+
+
+            //双击回调的方法
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                startAndPause();
+                return super.onDoubleTap(e);
+
+            }
+
+            //单击回调的方法
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent e) {
+
+                if (isShowMediaController) {
+                    //如果是显示的 就让他隐藏
+                    hideMediaController();
+                    //mHandler.removeMessages(HIDE_MEIDACONTROLLER);
+
+                } else {
+                    //如果是隐藏的 就让它显示
+                    showMediaController();
+                    mHandler.sendEmptyMessageDelayed(HIDE_MEIDACONTROLLER, HINDE_TIME);
+                }
+
+                return super.onSingleTapConfirmed(e);
+
+            }
+        });
+
+    }
+
+    //默认是隐藏控制面板的
+    //true 显示  false 隐藏
+    private boolean isShowMediaController = false;
+
+    //隐藏控制面板
+    private void hideMediaController() {
+        llBottom.setVisibility(View.INVISIBLE);
+        llTop.setVisibility(View.INVISIBLE);
+        isShowMediaController = false;
+    }
+
+    //显示控制面板
+    private void showMediaController() {
+        llBottom.setVisibility(View.VISIBLE);
+        llTop.setVisibility(View.VISIBLE);
+        isShowMediaController = true;
+    }
+
+    //默认是隐藏音量面板的
+    private boolean isShowVolumeModule = false;
+
+    //隐藏音量面板
+    private void hideVolumeModule() {
+        llSpeaker.setVisibility(View.INVISIBLE);
+        isShowVolumeModule = false;
+    }
+
+    //显示音量模块
+    private void showVolumeModule() {
+        llSpeaker.setVisibility(View.VISIBLE);
+        isShowVolumeModule = true;
+    }
+
+    private float startY;
+    private float startX;
+    private float touchRange;
+    private int mVol; //记录当前的音量
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        //[3] 把事件给手势识别器 解析
+        mGestureDetector.onTouchEvent(event);
+        switch (event.getAction()) {
+            //【1】按下的时候 记录新的初始值
+            case MotionEvent.ACTION_DOWN:
+                startX = event.getX();
+                startY = event.getY();
+                //此时的最小值是  screenHeight 因为是默认横屏
+                touchRange = Math.min(screenWidth, screenHeight);
+                if(startX <= touchRange/2){
+                    //如果x起始点在屏幕左侧 操作音量
+                    mVol = am.getStreamVolume(AudioManager.STREAM_MUSIC);
+                }
+
+                break;
+
+
+            case MotionEvent.ACTION_MOVE:
+                //【2】来到新的左边
+                float endY = event.getY();
+                //【3】计算偏移量
+                float distanceY = startY - endY;
+                if(startX <= touchRange/2){
+                    //屏幕滑动的距离： 总距离 = 改变的声音 / 最大音量
+                    //要改变的声音 = (滑动的距离 / 总距离)*最大音量
+                    float changVolume = (distanceY / touchRange) * maxVolume;
+                    //最终的声音= 原来的音量 + 改变的声音；
+                    //下面公式相当于 0 < mVol + changVolume < volume <maxVolume
+                    float volume = Math.min(Math.max(mVol + changVolume, 0), maxVolume);
+
+                    if (changVolume != 0) {
+                        updateVolumeProgress((int) volume);
+                        showVolumeModule();
+                        mHandler.removeMessages(HIDE_VolumeModule);
+                        mHandler.sendEmptyMessage(UPDATE_VOLUME);
+                    }
+                }
+
+
+
+                break;
+
+            case MotionEvent.ACTION_UP:
+                if(startX <= touchRange/2){
+                    mHandler.sendEmptyMessageDelayed(HIDE_VolumeModule, HINDE_TIME);
+                }
+
+                break;
+        }
+        return super.onTouchEvent(event);
+    }
+
+    class BatteryReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //获取电量值 0 - 100
+            int level = intent.getIntExtra("level", 0);
+            electricQuantity = level;
+            //广播接收者在主线程运行的
+            setBattery(level);
+        }
+    }
+
+    private void setBattery(int level) {
+        if (level <= 0) {
+            ivBattery.setImageResource(R.drawable.ic_battery_0);
+        } else if (level <= 10) {
+            ivBattery.setImageResource(R.drawable.ic_battery_10);
+        } else if (level <= 20) {
+            ivBattery.setImageResource(R.drawable.ic_battery_20);
+        } else if (level <= 40) {
+            ivBattery.setImageResource(R.drawable.ic_battery_40);
+        } else if (level <= 60) {
+            ivBattery.setImageResource(R.drawable.ic_battery_60);
+        } else if (level <= 80) {
+            ivBattery.setImageResource(R.drawable.ic_battery_80);
+        } else if (level <= 100) {
+            ivBattery.setImageResource(R.drawable.ic_battery_100);
+        } else {
+            ivBattery.setImageResource(R.drawable.ic_battery_100);
+        }
+    }
+
+    /**
+     * Find the Views in the layout<br />
+     * <br />
+     * Auto-created on 2019-08-21 13:46:47 by Android Layout Finder
+     * (http://www.buzzingandroid.com/tools/android-layout-finder)
+     */
+    private void findViews() {
+        setContentView(R.layout.activity_system_video_player);
+        mVideoView = findViewById(R.id.videoview);
+        llTop = (LinearLayout) findViewById(R.id.ll_top);
+        ivBattery = (ImageView) findViewById(R.id.iv_battery);
+        tvBatteryNumber = (TextView) findViewById(R.id.tv_battery_number);
+        tvTime = (TextView) findViewById(R.id.tv_time);
+        btnVideoExit = (ImageButton) findViewById(R.id.btn_video_exit);
+        tvName = (TextView) findViewById(R.id.tv_name);
+        llBottom = (LinearLayout) findViewById(R.id.ll_bottom);
+        btnStop = findViewById(R.id.btn_stop);
+        tvCurrentTime = (TextView) findViewById(R.id.tv_current_time);
+        seekbarVideo = (SeekBar) findViewById(R.id.seekbar_video);
+        tvDuration = (TextView) findViewById(R.id.tv_duration);
+        btnVideoNext = (ImageButton) findViewById(R.id.btn_video_next);
+        llSpeaker = findViewById(R.id.ll_speacker);
+        seekbarVoice = findViewById(R.id.seekbar_voice);
+        ivSpeak = findViewById(R.id.iv_video_speaker);
+        tvVoiceNumber = findViewById(R.id.tv_voice_number);
+
+        btnVideoExit.setOnClickListener(this);
+        btnStop.setOnClickListener(this);
+        btnVideoNext.setOnClickListener(this);
+        ivSpeak.setOnClickListener(this);
+
+        //设置声量 seekBar 的最大值
+        seekbarVoice.setMax(maxVolume);
+        //默认值是当前声量
+        seekbarVoice.setProgress(currentVolume);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == btnVideoExit) {
+            finish();
+        } else if (v == btnStop) {
+            startAndPause();
+        } else if (v == btnVideoNext) {
+            setPlayNext();
+        } else if (v == ivSpeak) {
+            isMute = !isMute;
+            updateVolume(currentVolume);
+            //点击音量按钮的时候 隐藏音量模块的时间 重新计算时间
+            mHandler.removeMessages(HIDE_VolumeModule);
+            mHandler.sendEmptyMessageDelayed(HIDE_VolumeModule, HINDE_TIME);
+        }
+
+        //点击按钮的时候 隐藏控制面板时间 重新计算时间
+        mHandler.removeMessages(HIDE_MEIDACONTROLLER);
+        mHandler.sendEmptyMessageDelayed(HIDE_MEIDACONTROLLER, HINDE_TIME);
+    }
+
+    private void startAndPause() {
+        if (mVideoView.isPlaying()) {
+            //如果正在播放 切换到暂停状态
+            mVideoView.pause();
+            btnStop.setBackgroundResource(R.drawable.btn_pause_pressed);
+        } else {
+            //如果是暂停状态 切换到播放
+            mVideoView.start();
+            btnStop.setBackgroundResource(R.drawable.btn_pause_normal);
+        }
+    }
+
+    private void setPlayNext() {
+        if (mediaItems != null && mediaItems.size() > 0) {
+            //如果播放列表不为空 就播放下一个
+            position++;
+            if (position < mediaItems.size()) {
+
+                MediaItem mediaItem = mediaItems.get(position);
+                //设置播放地址
+                mVideoView.setVideoPath(mediaItem.getData());
+                tvName.setText(mediaItem.getName());
+
+                setButtonState();
+
+                if (position == mediaItems.size() - 1) {
+                    Toast.makeText(getApplicationContext(), "已经是最后一个视频了", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } else if (mUri != null) {
+            //播放完 此文件夹 退出播放器
+            finish();
+
+        }
+    }
+
+    /*
+    设置 下一部 视频 的状态
+     */
+    private void setButtonState() {
+        //播放列表
+        if (mediaItems != null && mediaItems.size() > 0) {
+            if (position == 0) {
+                //选择视频播放在第一个  可以有下一部视频
+                btnVideoNext.setVisibility(View.VISIBLE);
+            } else if (position == mediaItems.size() - 1) {
+                //如果是最后一个视频了 没有下一部了 隐藏按键
+                btnVideoNext.setVisibility(View.INVISIBLE);
+            } else {
+                //其他位置的 都可以点击
+                btnVideoNext.setVisibility(View.VISIBLE);
+            }
+
+        } else if (mUri != null) {
+
+            btnVideoNext.setVisibility(View.INVISIBLE);
+
+        } else {
+            Toast.makeText(getApplicationContext(), "没有播放地址", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+            //如果按下了音量减小键
+            //制定音量边界
+            if(currentVolume > 0){
+                currentVolume--;
+            }else {
+                currentVolume = 0;
+            }
+
+            updateVolumeProgress(currentVolume);
+            showVolumeModule();
+            mHandler.removeMessages(HIDE_VolumeModule);
+            mHandler.sendEmptyMessageDelayed(HIDE_VolumeModule, HINDE_TIME);
+            mHandler.sendEmptyMessage(UPDATE_VOLUME);
+            return true;
+        } else if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+            //如果按下了音量增大键
+            //制定音量边界
+            if(currentVolume < 100){
+                currentVolume++;
+            }else {
+                currentVolume = 100;
+            }
+            updateVolumeProgress(currentVolume);
+            showVolumeModule();
+            mHandler.removeMessages(HIDE_VolumeModule);
+            mHandler.sendEmptyMessageDelayed(HIDE_VolumeModule, HINDE_TIME);
+            mHandler.sendEmptyMessage(UPDATE_VOLUME);
+            return true; //返回true 就不会显示 系统自带的音量界面
+        }
+
+
+        return super.onKeyDown(keyCode, event);
+
+    }
+
+    //完全覆盖 占完整个屏幕 Activity A -》 B 跳转 ->A
+    //(A->B)A.onPause -> B.onCreate-> B.onStart-> B.onResume -> A.onStop->(B->A) B.onPause -> A.onRestart->A.onStart->A.onResume
+    // --> B.onStop - > B.onDestory
+
+    //跳转页面不完全覆盖
+    //(A->B)A.onPause -> B.onCreate - > B.onStart -> B.onResume
+    //(B->A)B.onPause -> A.onResume -> B.onstop - > B.onDestory
+
+    //Actvity 横竖屏切换 先销毁 再创建
+    // onPause--> onStop--> onDestory-->oncreate-->onstart-->onResume
+
+    //Activity 创建到显示 执行方法 oncreate-->onstart-->onResume
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LogUtil.e("onStart------");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LogUtil.e("onResume------");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        LogUtil.e("onRestart------");
+    }
+
+    //Activity销毁过程 onPause--> onStop--> onDestory
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LogUtil.e("onPause------");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LogUtil.e("onStop------");
+    }
+
+    @Override
+    protected void onDestroy() {
+        //解绑广播接收者
+        if (mBatteryReceiver != null) {
+            unregisterReceiver(mBatteryReceiver);
+            mBatteryReceiver = null;
+        }
+        super.onDestroy();
+        LogUtil.e("onDestroy------");
+    }
+}

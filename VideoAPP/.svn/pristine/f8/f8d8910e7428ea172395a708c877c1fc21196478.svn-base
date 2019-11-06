@@ -1,0 +1,96 @@
+package com.example.videoapp.activity;
+
+
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RadioGroup;
+
+import com.example.videoapp.R;
+import com.example.videoapp.base.BasePager;
+import com.example.videoapp.base.MyFragment;
+import com.example.videoapp.pager.audioPager;
+import com.example.videoapp.pager.hotPager;
+import com.example.videoapp.pager.netVideoPager;
+import com.example.videoapp.pager.videoPager;
+
+import java.util.ArrayList;
+
+public class HomeActivity extends FragmentActivity {
+
+    private RadioGroup rg_home;
+    private ArrayList<BasePager> mBasePager;
+    private int position;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
+
+        rg_home = findViewById(R.id.rg_home);
+
+        mBasePager = new ArrayList<>();
+        mBasePager.add(new videoPager(this));
+        mBasePager.add(new audioPager(this));
+        mBasePager.add(new netVideoPager(this));
+        mBasePager.add(new hotPager(this));
+
+
+        rg_home.setOnCheckedChangeListener(new MyOnCheckedChangeListener());
+        rg_home.check(R.id.rb_localvideo);
+
+    }
+
+    class MyOnCheckedChangeListener implements RadioGroup.OnCheckedChangeListener {
+
+        @Override
+        public void onCheckedChanged(RadioGroup group, int checkedId) {
+            switch (checkedId) {
+
+                case R.id.rb_localvideo:
+                    position = 0;
+                    break;
+
+                case R.id.rb_localmusic:
+                    position = 1;
+                    break;
+
+                case R.id.rb_netvideo:
+                    position = 2;
+                    break;
+
+                case R.id.rb_nethot:
+                    position = 3;
+                    break;
+
+            }
+            setFragment();
+        }
+    }
+
+    private void setFragment() {
+        // 获取FragmentManager
+        FragmentManager manager = getSupportFragmentManager();
+        // 开启事务
+        FragmentTransaction ft = manager.beginTransaction();
+        // 替换
+        ft.replace(R.id.fl_home, new MyFragment().newInstance(getBasePager()));
+        // 提交
+        ft.commit();
+    }
+
+    private BasePager getBasePager() {
+        BasePager basePager = mBasePager.get(position);
+        if(basePager != null && !basePager.isInitData){
+            basePager.isInitData = true;
+            basePager.initDta();
+        }
+        return basePager;
+    }
+}

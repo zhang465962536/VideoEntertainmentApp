@@ -1,0 +1,55 @@
+package com.example.videoapp.activity;
+
+import android.app.Activity;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Bundle;
+import android.widget.MediaController;
+import android.widget.Toast;
+import android.widget.VideoView;
+
+import com.example.videoapp.R;
+
+public class SystemVideoPlayer extends Activity {
+
+    private VideoView mVideoView;
+    private Uri mUri;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_system_video_player);
+
+        mVideoView =  findViewById(R.id.videoview);
+
+        mUri = getIntent().getData();
+        mVideoView.setVideoURI(mUri);
+
+        mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mVideoView.start();
+            }
+        });
+
+
+        mVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(MediaPlayer mp, int what, int extra) {
+
+                Toast.makeText(getApplicationContext(),"视频播放失败",Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+        mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                Toast.makeText(getApplicationContext(),"播放完成",Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+
+
+        mVideoView.setMediaController(new MediaController(this));
+    }
+}

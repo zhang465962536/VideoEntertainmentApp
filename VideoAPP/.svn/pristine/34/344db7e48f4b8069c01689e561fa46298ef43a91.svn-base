@@ -1,0 +1,34 @@
+package com.example.videoapp.pager;
+
+import android.content.Context;
+import android.graphics.Color;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.TextView;
+
+import com.example.videoapp.base.BasePager;
+
+public class hotPager extends BasePager {
+
+    private TextView mTextView;
+
+    public hotPager(Context context) {
+        super(context);
+    }
+
+    @Override
+    public View initView() {
+        mTextView = new TextView(mContext);
+
+        mTextView.setTextSize(30);
+        mTextView.setTextColor(Color.RED);
+        mTextView.setGravity(Gravity.CENTER);
+        return mTextView;
+    }
+
+    @Override
+    public void initDta() {
+        super.initDta();
+        mTextView.setText("无聊看看网络段子？");
+    }
+}

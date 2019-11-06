@@ -1,0 +1,154 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:2:1-21:12
+INJECTED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:2:1-21:12
+INJECTED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:2:1-21:12
+INJECTED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:2:1-21:12
+MERGED from [com.android.support:appcompat-v7:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\836ee3bf3b613a8ffe005c98996b56b8\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\9687b810c188524ce344e4bfeea3d6c4\AndroidManifest.xml:2:1-11:12
+MERGED from [com.android.support:support-fragment:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\f3515b753bf7d86e5d3b3853d9643094\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\6b9d64101c226e29338c2bed40734884\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-ui:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\9b277ec871cbe01cf3d0afde6ef4bc52\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-utils:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\0bbf5c8ae7956a537c50b4da2784d878\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-vector-drawable:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\ce49b58be871e46cc542b51e13238d7a\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:loader:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\4edf1afc5ca87b913715f10fd5438e37\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:viewpager:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\864614df3e6b8cf8c394c0bbe94775e3\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:coordinatorlayout:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\5c71cb54864fc05da5cf617a3ba0d9a8\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:drawerlayout:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\ca05ad1650a7361292f98019103267c7\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:slidingpanelayout:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\ee6fba3e75752341984ce1bc050b995d\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:customview:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\9e6e7c17dfdce773e29287c154621ab0\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\d8006b1db46d35bfaf4122de46d8f00e\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\181d5d6d72ced049810921562783a150\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\ec6291da08f1620affe4a9e310a4ef06\AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\85e5de69be9355f22d0d723ac72b037b\AndroidManifest.xml:17:1-25:12
+MERGED from [com.android.support:cursoradapter:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\d938f8f115eb4b770cf3323554e950b5\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:runtime:1.1.1] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\5dd7d48a045a8b98e46039df97aaa5c7\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:documentfile:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\4d90ad33a77499711636ed0f55fb85ee\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\557ba174b079a65e7979c1e3b1160815\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:print:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\acb84b9cf8ab5406a61159236e3b6539\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\a2e1955939761312400472cd220c3fc4\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata:1.1.1] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\b799402aca51b7112a1cae2238457afb\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\675a76ba2a7dafbf17139a1295e0d970\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.core:runtime:1.1.1] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\7a33966779a22972dc952c5e0018ec48\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:interpolator:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\00fc9b07163cb04a51d7154a9aa5360f\AndroidManifest.xml:17:1-22:12
+INJECTED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:2:1-21:12
+INJECTED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:2:1-21:12
+INJECTED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:2:1-21:12
+	package
+		ADDED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:3:5-35
+		INJECTED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml
+		INJECTED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml
+		ADDED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:2:1-21:12
+		INJECTED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml
+		ADDED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:2:1-21:12
+		INJECTED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:2:11-69
+application
+ADDED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:5:5-19:19
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\9687b810c188524ce344e4bfeea3d6c4\AndroidManifest.xml:9:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\9687b810c188524ce344e4bfeea3d6c4\AndroidManifest.xml:9:5-20
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\ec6291da08f1620affe4a9e310a4ef06\AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\ec6291da08f1620affe4a9e310a4ef06\AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\85e5de69be9355f22d0d723ac72b037b\AndroidManifest.xml:22:5-23:19
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\85e5de69be9355f22d0d723ac72b037b\AndroidManifest.xml:22:5-23:19
+	android:appComponentFactory
+		ADDED from [com.android.support:support-compat:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\ec6291da08f1620affe4a9e310a4ef06\AndroidManifest.xml:22:18-91
+	android:supportsRtl
+		ADDED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:10:9-35
+	android:label
+		ADDED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:8:9-41
+	android:roundIcon
+		ADDED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:9:9-54
+	android:icon
+		ADDED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:7:9-43
+	android:allowBackup
+		ADDED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:6:9-35
+	android:theme
+		ADDED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:11:9-40
+activity#com.example.videoapp.MainActivity
+ADDED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:12:9-18:20
+	android:name
+		ADDED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:12:19-47
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:13:13-17:29
+action#android.intent.action.MAIN
+ADDED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:14:17-69
+	android:name
+		ADDED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:14:25-66
+category#android.intent.category.LAUNCHER
+ADDED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:16:17-77
+	android:name
+		ADDED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml:16:27-74
+uses-sdk
+INJECTED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml
+INJECTED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml
+MERGED from [com.android.support:appcompat-v7:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\836ee3bf3b613a8ffe005c98996b56b8\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\836ee3bf3b613a8ffe005c98996b56b8\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\9687b810c188524ce344e4bfeea3d6c4\AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\9687b810c188524ce344e4bfeea3d6c4\AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support:support-fragment:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\f3515b753bf7d86e5d3b3853d9643094\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\f3515b753bf7d86e5d3b3853d9643094\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\6b9d64101c226e29338c2bed40734884\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\6b9d64101c226e29338c2bed40734884\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\9b277ec871cbe01cf3d0afde6ef4bc52\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\9b277ec871cbe01cf3d0afde6ef4bc52\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\0bbf5c8ae7956a537c50b4da2784d878\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\0bbf5c8ae7956a537c50b4da2784d878\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\ce49b58be871e46cc542b51e13238d7a\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\ce49b58be871e46cc542b51e13238d7a\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\4edf1afc5ca87b913715f10fd5438e37\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\4edf1afc5ca87b913715f10fd5438e37\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\864614df3e6b8cf8c394c0bbe94775e3\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\864614df3e6b8cf8c394c0bbe94775e3\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\5c71cb54864fc05da5cf617a3ba0d9a8\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\5c71cb54864fc05da5cf617a3ba0d9a8\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\ca05ad1650a7361292f98019103267c7\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\ca05ad1650a7361292f98019103267c7\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\ee6fba3e75752341984ce1bc050b995d\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\ee6fba3e75752341984ce1bc050b995d\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\9e6e7c17dfdce773e29287c154621ab0\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\9e6e7c17dfdce773e29287c154621ab0\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\d8006b1db46d35bfaf4122de46d8f00e\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\d8006b1db46d35bfaf4122de46d8f00e\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\181d5d6d72ced049810921562783a150\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\181d5d6d72ced049810921562783a150\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\ec6291da08f1620affe4a9e310a4ef06\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\ec6291da08f1620affe4a9e310a4ef06\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\85e5de69be9355f22d0d723ac72b037b\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\85e5de69be9355f22d0d723ac72b037b\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\d938f8f115eb4b770cf3323554e950b5\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\d938f8f115eb4b770cf3323554e950b5\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\5dd7d48a045a8b98e46039df97aaa5c7\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\5dd7d48a045a8b98e46039df97aaa5c7\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\4d90ad33a77499711636ed0f55fb85ee\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\4d90ad33a77499711636ed0f55fb85ee\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\557ba174b079a65e7979c1e3b1160815\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\557ba174b079a65e7979c1e3b1160815\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\acb84b9cf8ab5406a61159236e3b6539\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\acb84b9cf8ab5406a61159236e3b6539\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\a2e1955939761312400472cd220c3fc4\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\a2e1955939761312400472cd220c3fc4\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\b799402aca51b7112a1cae2238457afb\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\b799402aca51b7112a1cae2238457afb\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\675a76ba2a7dafbf17139a1295e0d970\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\675a76ba2a7dafbf17139a1295e0d970\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\7a33966779a22972dc952c5e0018ec48\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\7a33966779a22972dc952c5e0018ec48\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\00fc9b07163cb04a51d7154a9aa5360f\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] C:\Users\张小黑\.gradle\caches\transforms-2\files-2.1\00fc9b07163cb04a51d7154a9aa5360f\AndroidManifest.xml:20:5-44
+INJECTED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml
+INJECTED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml
+		ADDED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml
+		INJECTED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml
+		ADDED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml
+		INJECTED from D:\1\AS\VideoAPP\app\src\main\AndroidManifest.xml
